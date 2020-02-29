@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class Hacker : MonoBehaviour
 {
+    string[] passwords = { "apple", "difficulty", "springtime"};
+
     //Game State
     int level;
+    string password;
 
     enum Screen { MainMenu, Password, Win };
     Screen currentScreen = Screen.MainMenu;
@@ -33,6 +36,29 @@ public class Hacker : MonoBehaviour
         {
             RunMainMenu(input);
         }
+        else if(currentScreen == Screen.Password)
+        {
+            GuessPassword(input);
+        }
+        else if(currentScreen == Screen.Win)
+        {
+            currentScreen = Screen.MainMenu;
+            ShowMainMenu();
+        }
+    }
+
+    void GuessPassword(string input)
+    {
+        if(input == password)
+        {
+            currentScreen = Screen.Win;
+            Terminal.WriteLine("HOLY SHIT YOU GOT IT!");
+            Terminal.WriteLine("Press enter to continue");
+        }
+        else
+        {
+            Terminal.WriteLine("Wrong Password, try again.");
+        }
     }
 
     void ShowMainMenu()
@@ -53,18 +79,21 @@ public class Hacker : MonoBehaviour
         if (input == "1")
         {
             level = 1;
+            password = "apple";
             currentScreen = Screen.Password;
             StartLevel();
         }
         else if (input == "2")
         {
             level = 2;
+            password = "difficulty";
             currentScreen = Screen.Password;
             StartLevel();
         }
         else if (input == "3")
         {
             level = 3;
+            password = "springtime";
             currentScreen = Screen.Password;
             StartLevel();
         }
